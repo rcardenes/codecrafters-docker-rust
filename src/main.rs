@@ -27,7 +27,10 @@ fn main() -> Result<()> {
         let std_err = std::str::from_utf8(&output.stderr)?;
         print!("{std_out}");
         eprint!("{std_err}");
-    } else {
+    } else if let Some(code) = output.status.code() {
+        std::process::exit(code)
+    }
+    else {
         std::process::exit(1);
     }
 
